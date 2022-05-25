@@ -1,0 +1,207 @@
+﻿<Page x:Class="StudentExamClient.Views.EditorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+      xmlns:local="clr-namespace:StudentExamClient.Views" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Background="LightGray"
+      Title="EditorPage">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key='groups' Source="{Binding Groups}">
+            <CollectionViewSource.SortDescriptions>
+                <componentModel:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <CollectionViewSource x:Key='students' Source="{Binding Students}">
+            <CollectionViewSource.SortDescriptions>
+                <componentModel:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Page.Resources>
+
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="2" 
+                BorderBrush="DarkGray" 
+                BorderThickness="1" 
+                Margin="0 -5 0 -5"/>
+
+        <Grid Grid.Column="0" Margin="0 0 4 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <DockPanel LastChildFill="False">
+                
+                <TextBlock Text="Группы" 
+                           Margin="4 2 0 0"/>
+
+                <Button Command="{Binding OpenAddGroupWindow}" 
+                        Style="{StaticResource AddButtonStyle}"
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+
+                <Button Command="{Binding RemoveGroup}" 
+                        Style="{StaticResource RemoveButtonStyle}"
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+
+                <Button Command="{Binding OpenEditGroupWindow}" 
+                        Style="{StaticResource SettingsButtonStyle}"
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+            </DockPanel>
+            
+            <ListView ItemsSource="{Binding Source={StaticResource groups}}" 
+                      SelectedItem="{Binding SelectedGroup}" 
+                      Grid.Row="1" 
+                      d:ItemsSource="{d:SampleData ItemCount=5}">
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="0 0 4 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <DockPanel LastChildFill="False">
+
+                <TextBlock Text="Студенты" 
+                           Margin="4 2 0 0"/>
+
+                <Button Style="{StaticResource AddButtonStyle}"
+                        Command="{Binding OpenAddStudentWindow}" 
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+
+                <Button Style="{StaticResource RemoveButtonStyle}"
+                        Command="{Binding RemoveStudent}" 
+                        CommandParameter="{Binding SelectedStudent}" 
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+                
+                <Button Command="{Binding OpenEditStudentWindow}" 
+                        Style="{StaticResource SettingsButtonStyle}"
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+            </DockPanel>
+
+            <ListView ItemsSource="{Binding Source={StaticResource students}}" 
+                      SelectedItem="{Binding SelectedStudent}" 
+                      Grid.Row="1" 
+                      d:ItemsSource="{d:SampleData ItemCount=5}">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+        <Grid Grid.Column="3" Margin="4 0 4 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <DockPanel LastChildFill="False">
+
+                <TextBlock Text="Предметы" 
+                           Margin="4 2 0 0"/>
+
+                <Button Style="{StaticResource AddButtonStyle}"
+                        Command="{Binding OpenAddSubjectWindow}" 
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+
+                <Button Style="{StaticResource RemoveButtonStyle}"
+                        Command="{Binding RemoveSubject}" 
+                        CommandParameter="{Binding SelectedSubject}" 
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+
+                <Button Command="{Binding OpenEditSubjectWindow}" 
+                        Style="{StaticResource SettingsButtonStyle}"
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+            </DockPanel>
+
+            <ListView ItemsSource="{Binding Subjects}" 
+                      SelectedItem="{Binding SelectedSubject}" 
+                      Grid.Row="1" 
+                      d:ItemsSource="{d:SampleData ItemCount=5}">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+        <Grid Grid.Column="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <DockPanel LastChildFill="False">
+
+                <TextBlock Text="Тесты" 
+                           Margin="4 2 0 0"/>
+
+                <Button Style="{StaticResource AddButtonStyle}"
+                        Command="{Binding OpenAddExamWindow}" 
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+
+                <Button Style="{StaticResource RemoveButtonStyle}"
+                        Command="{Binding RemoveExam}" 
+                        CommandParameter="{Binding SelectedExam}" 
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+
+                <Button Command="{Binding OpenEditExamWindow}" 
+                        Style="{StaticResource SettingsButtonStyle}"
+                        DockPanel.Dock="Right" 
+                        Margin="4 0 0 4"/>
+            </DockPanel>
+
+            <ListView ItemsSource="{Binding Exams}" 
+                      SelectedItem="{Binding SelectedExam}" 
+                      Grid.Row="1" 
+                      d:ItemsSource="{d:SampleData ItemCount=5}">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Title}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+    </Grid>
+</Page>

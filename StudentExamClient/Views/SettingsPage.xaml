@@ -1,0 +1,36 @@
+﻿<Page x:Class="StudentExamClient.Views.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:StudentExamClient.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Background="LightGray"
+      Title="SettingsPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Margin="5">
+            <Rectangle Width="91" Height="20" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 4" Stroke="White" RadiusX="3" RadiusY="3"/>
+            <Rectangle Width="89" Height="20" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11 5" Stroke="LightGray" RadiusX="3" RadiusY="3"/>
+            <GroupBox Background="White" Margin="5">
+                <GroupBox.Header>
+                    <TextBlock Text="Мои данные" FontSize="14"/>
+                </GroupBox.Header>
+                <StackPanel Margin="5">
+                    <TextBlock Text="Имя пользователя:" Margin="0 8 0 0"/>
+                    <TextBox Text="{Binding CurrentStudent.Name}" IsReadOnly="True" Padding="3" VerticalContentAlignment="Center"/>
+                    <TextBlock Text="Пароль:" Margin="0 8 0 0"/>
+                    <Button Content="Сменить пароль" Command="{Binding OpenEditPasswordWindow}" Padding="3"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Page>

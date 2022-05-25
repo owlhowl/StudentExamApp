@@ -1,0 +1,137 @@
+﻿<Page x:Class="StudentExamClient.Views.AllStatsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:StudentExamClient.Views"
+      xmlns:cv="clr-namespace:StudentExamClient.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1000" Background="LightGray"
+      Title="AllStats">
+
+    <Page.Resources>
+        <cv:ExamTitleConverter x:Key="ExamTitleConverter"/>
+        <cv:LocalDateTimeConverter x:Key="LocalDateTimeConverter"/>
+        <cv:AnswersJsonConverter x:Key="AnswersJsonConverter"/>
+        <cv:ExamStudentConverter x:Key="ExamStudentConverter"/>
+    </Page.Resources>
+
+    <Grid Margin="5">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid ItemsSource="{Binding FilteredExams}" Margin="0 0 4 0"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Студент" Binding="{Binding Path=StudentId, Converter={StaticResource ExamStudentConverter}}" IsReadOnly="True" MinWidth="150"/>
+                <DataGridTextColumn Header="Дата и время" Binding="{Binding Path=DateTaken, Converter={StaticResource LocalDateTimeConverter}}" IsReadOnly="True" SortDirection="Descending" MinWidth="100"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Path=ExamId, Converter={StaticResource ExamTitleConverter}}" IsReadOnly="True" MinWidth="150"/>
+                <DataGridTextColumn Header="Баллы" Binding="{Binding Path=Score}" IsReadOnly="True" MinWidth="50"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StatusBar Grid.Row="1" BorderThickness="1" BorderBrush="Gray" Margin="0 -1 4 0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Записей на странице: "/>
+                <TextBlock Text="{Binding FilteredExams.Count, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </StatusBar>
+
+        <Grid Grid.Column="1" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="0 0 2 4">
+                <TextBlock Text="Группа:" HorizontalAlignment="Center" Margin="0 0 0 2"/>
+                <ComboBox ItemsSource="{Binding GroupsFilter}" SelectedItem="{Binding SelectedGroupFilter}" Height="24">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="0 0 2 4">
+                <TextBlock Text="Студент:" HorizontalAlignment="Center" Margin="0 0 0 2"/>
+                <ComboBox ItemsSource="{Binding StudentsFilter}" SelectedItem="{Binding SelectedStudentFilter}" Height="24">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Margin="2 0 0 4">
+                <TextBlock Text="Предмет:" HorizontalAlignment="Center" Margin="0 0 0 2"/>
+                <ComboBox ItemsSource="{Binding SubjectsFilter}" SelectedItem="{Binding SelectedSubjectFilter}" Height="24">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="2 0 0 4">
+                <TextBlock Text="Тест:" HorizontalAlignment="Center" Margin="0 0 0 2"/>
+                <ComboBox ItemsSource="{Binding ExamsFilter}" SelectedItem="{Binding SelectedExamFilter}" Height="24">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="2" Margin="0 0 2 4">
+                <TextBlock Text="Начало периода:" HorizontalAlignment="Center" Margin="0 0 0 2"/>
+                <DatePicker SelectedDate="{Binding DateStart}" IsTodayHighlighted="True"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="2" Margin="2 0 0 4">
+                <TextBlock Text="Конец периода:" HorizontalAlignment="Center" Margin="0 0 0 2"/>
+                <DatePicker SelectedDate="{Binding DateEnd}" IsTodayHighlighted="True"/>
+            </StackPanel>
+
+            <Button Content="Показать" Command="{Binding Filter}" Grid.Column="0" Grid.Row="3" Padding="3" Margin="0 8 2 4"/>
+            <Button Content="Сбросить" Command="{Binding ClearFilter}" Grid.Column="1" Grid.Row="3" Padding="3" Margin="2 8 0 4"/>
+
+            <StackPanel Grid.Row="4" Grid.Column="0" Margin="2 6 2 8">
+                <TextBlock Text="Средний балл общий:" Margin="0 4 4 0" VerticalAlignment="Center"/>
+                <TextBlock Text="Средний балл за месяц:" Margin="0 8 4 0" VerticalAlignment="Center"/>
+                <TextBlock Text="Средний балл за период:" Margin="0 8 4 0" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" Grid.Column="1" Margin="2 8 0 8">
+                <TextBox Text="{Binding AverageScore}" Margin="0 0 0 2" IsReadOnly="True" Padding="2"/>
+                <TextBox Text="{Binding AverageScoreMonth}" Margin="0 0 0 2" IsReadOnly="True" Padding="2"/>
+                <TextBox Text="{Binding AverageScorePeriod}" IsReadOnly="True" Padding="2"/>
+            </StackPanel>
+
+        </Grid>
+
+        <Button Grid.Column="1" Grid.Row="2" Command="{Binding ExportToExcel}" Content="Экспорт в Excel"/>
+
+    </Grid>
+</Page>

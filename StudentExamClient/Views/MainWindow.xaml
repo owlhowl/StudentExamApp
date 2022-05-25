@@ -1,0 +1,87 @@
+﻿<Window x:Class="StudentExamClient.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentExamClient.Views"
+        xmlns:cv="clr-namespace:StudentExamClient.Converters"
+        mc:Ignorable="d"
+        Title="Система тестирования" Height="700" Width="1100" WindowStartupLocation="CenterScreen"
+        MinHeight="400" MinWidth="600">
+
+    <Window.Resources>
+        <cv:MenuConverter x:Key="menuConverter"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" LastChildFill="False" Margin="0 0 0 -1" Visibility="{Binding AdminVisibility}">
+            <RadioButton Content="Тесты" 
+                         Command="{Binding OpenExamListPage}" 
+                         IsChecked="True" 
+                         DockPanel.Dock="Left" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+            
+            <RadioButton Content="Редактор" 
+                         Command="{Binding OpenEditorPage}" 
+                         DockPanel.Dock="Left" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+
+            <RadioButton Content="Успеваемость" 
+                         Command="{Binding OpenAllStatsPage}" 
+                         DockPanel.Dock="Left" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+
+            <RadioButton Content="Выйти" 
+                         Command="{Binding LogOut}" 
+                         DockPanel.Dock="Right" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+            
+            <RadioButton Content="Настройки" 
+                         Command="{Binding OpenSettingsPage}" 
+                         DockPanel.Dock="Right" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="0" LastChildFill="False" Margin="0 0 0 -1" Visibility="{Binding UserVisibility}">
+            <RadioButton Content="Тесты" 
+                         Command="{Binding OpenExamListPage}" 
+                         IsChecked="True" 
+                         DockPanel.Dock="Left" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+            
+            <RadioButton Content="Моя статистика" 
+                         Command="{Binding OpenMyStatsPage}" 
+                         DockPanel.Dock="Left" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+
+            <RadioButton Content="Выйти" 
+                         Command="{Binding LogOut}" 
+                         DockPanel.Dock="Right" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+
+            <RadioButton Content="Настройки" 
+                         Command="{Binding OpenSettingsPage}" 
+                         DockPanel.Dock="Right" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="0" LastChildFill="False" Margin="0 0 0 -1" Visibility="{Binding CurrentExam, Converter={StaticResource menuConverter}}">
+            <RadioButton Content="{Binding CurrentExam.Title}" 
+                         IsChecked="True" 
+                         DockPanel.Dock="Left" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+
+            <RadioButton Content="Назад" 
+                         Command="{Binding QuitExam}" 
+                         DockPanel.Dock="Right" 
+                         Style="{StaticResource MenuButtonStyle}"/>
+        </DockPanel>
+        
+        <Frame Content="{Binding CurrentView}" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>

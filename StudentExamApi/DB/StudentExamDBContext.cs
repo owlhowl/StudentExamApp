@@ -12,6 +12,7 @@ namespace StudentExamApi.DB
         public StudentExamDBContext(DbContextOptions<StudentExamDBContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public virtual DbSet<Answer> Answers { get; set; } = null!;

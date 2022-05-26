@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Новый предмет" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Новый предмет" Height="200" Width="350" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
 
             <TextBlock Text="Название:"/>
             <TextBox Text="{Binding NewSubject.Name, UpdateSourceTrigger=PropertyChanged}" Height="24" Padding="3"/>

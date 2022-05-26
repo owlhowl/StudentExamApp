@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentExamClient.Views.EditWindows"
         mc:Ignorable="d"
-        Title="Редактирование предмета" Height="200" Width="350">
+        Title="Редактирование предмета" Height="200" Width="350" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
 

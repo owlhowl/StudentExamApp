@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid ItemsSource="{Binding FilteredExams}" SelectedItem="{Binding SelectedMyExam}" Margin="0 0 4 0"
+        <DataGrid ItemsSource="{Binding FilteredMyExams}" SelectedItem="{Binding SelectedMyExam}" Margin="0 0 4 0"
                   AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата и время" Binding="{Binding Path=DateTaken, Converter={StaticResource LocalDateTimeConverter}}" IsReadOnly="True" SortDirection="Descending" MinWidth="100"/>

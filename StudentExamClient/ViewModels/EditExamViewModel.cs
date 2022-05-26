@@ -1,10 +1,8 @@
 ﻿using ModelsApi;
 using StudentExamClient.Core;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 
 namespace StudentExamClient.ViewModels
@@ -15,7 +13,7 @@ namespace StudentExamClient.ViewModels
         public List<Answer> Answers { get; set; } = new List<Answer>();
     }
 
-    public class ExamEditViewModel : BaseViewModel
+    public class EditExamViewModel : BaseViewModel
     {
         private List<QuestionEdit> allQuestions;
 
@@ -29,7 +27,7 @@ namespace StudentExamClient.ViewModels
         public RelayCommandParameter RemoveAnswer { get; set; }
 
 
-        public ExamEditViewModel(Exam exam)
+        public EditExamViewModel(Exam exam)
         {
             Exam = exam;
             Questions = new ObservableCollection<QuestionEdit>();
@@ -78,9 +76,11 @@ namespace StudentExamClient.ViewModels
 
             GetExamAsync();
         }
-
+        
         private async void PostExamAsync()
-        {
+        { 
+            // Может работать нестабильно. Надо переделывать.
+
             var questionsApi = await Api.GetListAsync<List<Question>>("Question");
             int lastId = questionsApi.Last().Id;
 

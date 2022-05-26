@@ -9,7 +9,7 @@ namespace StudentExamClient.Views.EditWindows
         public EditExamWindow(Exam exam)
         {
             InitializeComponent();
-            DataContext = new ExamEditViewModel(exam);
+            DataContext = new EditExamViewModel(exam);
         }
     }
 }

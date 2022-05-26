@@ -38,6 +38,7 @@ namespace StudentExamClient.ViewModels
         public double AverageScorePeriod { get => averageScorePeriod; set { averageScorePeriod = value; OnPropertyChanged(); } }
 
         public ObservableCollection<StudentExam> FilteredExams { get; set; } = new ObservableCollection<StudentExam>();
+        public ObservableCollection<StudentExam> FilteredMyExams { get; set; } = new ObservableCollection<StudentExam>();
         public StudentExam SelectedMyExam { get => selectedMyExam; set { selectedMyExam = value; OnPropertyChanged(); } }
 
         public List<Group> GroupsFilter
@@ -181,15 +182,17 @@ namespace StudentExamClient.ViewModels
                     ws.Cell("C" + row.ToString()).Style.Font.SetBold();
                     ws.Cell("D" + row.ToString()).Value = "Кол-во баллов";
                     ws.Cell("D" + row.ToString()).Style.Font.SetBold();
-                    row++;
                     foreach (var exam in FilteredExams)
                     {
+                        row++;
                         ws.Cell("A" + row.ToString()).Value = allStudents.Find(s => s.Id == exam.StudentId).Name;
                         ws.Cell("B" + row.ToString()).Value = exam.DateTaken;
                         ws.Cell("C" + row.ToString()).Value = allExams.Find(e => e.Id == exam.ExamId).Title;
                         ws.Cell("D" + row.ToString()).Value = exam.Score;
-                        row++;
                     }
+
+                    ws.Cells("A1:D3").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    ws.Cells("A5:D" + row.ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
 
                     Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
                     sfd.DefaultExt = ".xlsx";
@@ -223,6 +226,7 @@ namespace StudentExamClient.ViewModels
             studentExams.Sort((a, b) => b.DateTaken.CompareTo(a.DateTaken));
 
             studentExams.ForEach(e => FilteredExams.Add(e));
+            studentExams.ForEach(e => { if (e.StudentId == AppSettings.CurrentUserId) FilteredMyExams.Add(e); });
 
             GetAverageScores(studentExams);
 
